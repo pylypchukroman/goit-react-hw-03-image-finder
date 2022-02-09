@@ -5,6 +5,7 @@ import { getImage } from 'utils/imageAPI';
 import Button from './Button/Button';
 import { Rings } from 'react-loader-spinner';
 import Modal from './Modal/Modal';
+import style from './App.module.css';
 
 class App extends Component {
   state = {
@@ -63,7 +64,9 @@ class App extends Component {
           <>
             <ImageGallery images={images} onClick={this.handleClick} />
             {isLoading ? (
-              <Rings heigth="100" width="100" color="red" />
+              <div className={style.Loader__wrapper}>
+                <Rings heigth="100" width="100" color="red" />
+              </div>
             ) : (
               search && <Button handleLoadMore={this.handleLoadMore} />
             )}
