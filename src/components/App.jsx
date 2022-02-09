@@ -42,7 +42,7 @@ class App extends Component {
   };
 
   render() {
-    const { images, isLoading, search, error, isModalOpen } = this.state;
+    const { images, isLoading, search, error } = this.state;
     return (
       <div>
         <Searchbar changeSearch={this.changeSearch} />
