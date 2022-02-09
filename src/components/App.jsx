@@ -19,24 +19,42 @@ class App extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.search !== this.state.search && this.state.search) {
-      this.setState({ isLoading: true, error: null });
-      getImage(this.state.search)
-        .then(images => this.setState({ images }))
-        .catch(err => this.setState({ error: err.message }))
-        .finally(() => this.setState({ isLoading: false }));
-    }
-
-    if (prevState.page !== this.state.page && this.state.page !== 1) {
-      this.setState({ isLoading: true, error: null });
-      getImage(this.state.search, this.state.page)
-        .then(images =>
-          this.setState({ images: [...prevState.images, ...images] })
-        )
-        .catch(err => this.setState({ error: err.message }))
-        .finally(() => this.setState({ isLoading: false }));
+    // if (prevState.search !== this.state.search && this.state.search) {
+    //   this.setState({ isLoading: true, error: null });
+    //   getImage(this.state.search)
+    //     .then(images => this.setState({ images }))
+    //     .catch(err => this.setState({ error: err.message }))
+    //     .finally(() => this.setState({ isLoading: false }));
+    // }
+    // if (prevState.page !== this.state.page && this.state.page !== 1) {
+    //   this.setState({ isLoading: true, error: null });
+    //   getImage(this.state.search, this.state.page)
+    //     .then(images =>
+    //       this.setState({ images: [...prevState.images, ...images] })
+    //     )
+    //     .catch(err => this.setState({ error: err.message }))
+    //     .finally(() => this.setState({ isLoading: false }));
+    // }
+    if (
+      (prevState.search !== this.state.search && this.state.search) ||
+      (prevState.page !== this.state.page && this.state.page !== 1)
+    ) {
+      this.setImage();
     }
   }
+
+  setImage = () => {
+    this.setState({ isLoading: true, error: null });
+    getImage(this.state.search, this.state.page)
+      .then(images =>
+        this.setState(prev => ({
+          images: this.state.page === 1 ? images : [...prev.images, ...images],
+        }))
+      )
+      .catch(error => this.setState({ error: error.message }))
+      .finally(() => this.setState({ isLoading: false }));
+  };
+
   changeSearch = search => {
     this.setState({ search, page: 1 });
   };
