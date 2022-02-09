@@ -1,7 +1,6 @@
 import ImageGallery from './ImageGallery/ImageGallery';
 import Searchbar from './Searchbar/Searchbar';
 import React, { Component } from 'react';
-import axios from 'axios';
 import { getImage } from 'utils/imageAPI';
 import Button from './Button/Button';
 import { Rings } from 'react-loader-spinner';
