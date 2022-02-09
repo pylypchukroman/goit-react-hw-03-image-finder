@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { getImage } from 'utils/imageAPI';
 import Button from './Button/Button';
 import { Rings } from 'react-loader-spinner';
+import Modal from './Modal/Modal';
 
 class App extends Component {
   state = {
@@ -12,6 +13,8 @@ class App extends Component {
     page: 1,
     isLoading: false,
     error: null,
+    largeImageURL: '',
+    showModal: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -41,21 +44,35 @@ class App extends Component {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({ showModal: !showModal }));
+  };
+
+  handleClick = image => {
+    this.toggleModal();
+    this.setState({ largeImageURL: image });
+  };
   render() {
-    const { images, isLoading, search, error } = this.state;
+    const { images, isLoading, search, error, showModal, largeImageURL } =
+      this.state;
     return (
       <div>
         <Searchbar changeSearch={this.changeSearch} />
         {error && <p>{error}</p>}
         {!error && (
           <>
-            <ImageGallery images={images} />
+            <ImageGallery images={images} onClick={this.handleClick} />
             {isLoading ? (
               <Rings heigth="100" width="100" color="red" />
             ) : (
               search && <Button handleLoadMore={this.handleLoadMore} />
             )}
           </>
+        )}
+        {showModal && (
+          <Modal onClose={this.toggleModal}>
+            <img src={largeImageURL} alt="" />
+          </Modal>
         )}
       </div>
     );
