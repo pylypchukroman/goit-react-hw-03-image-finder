@@ -17,12 +17,12 @@ class Searchbar extends Component {
   render() {
     return (
       <header className={style.Searchbar}>
-        <form className="form" onSubmit={this.hendleSubmit}>
-          <button type="submit" className="button">
-            <span className="button-label">Search</span>
+        <form className={style.SearchForm} onSubmit={this.hendleSubmit}>
+          <button type="submit" className={style.SearchForm__button}>
+            <span className={style.Button__label}>Search</span>
           </button>
           <input
-            className="input"
+            className={style.SearchForm__input}
             type="text"
             autoComplete="off"
             value={this.state.input}
